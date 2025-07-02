@@ -1,0 +1,32 @@
+
+export const dynamic = "force-dynamic";
+
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { TaskManagementService } from '@/lib/services/task-management-service';
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { projectId: string } }
+) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const kanbanData = await TaskManagementService.getKanbanBoardData(
+      params.projectId,
+      session.user.tenantId
+    );
+
+    return NextResponse.json({ kanban: kanbanData });
+  } catch (error) {
+    console.error('Error fetching kanban data:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch kanban data' },
+      { status: 500 }
+    );
+  }
+}

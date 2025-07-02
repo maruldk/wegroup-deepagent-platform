@@ -1,0 +1,341 @@
+  ▲ Next.js 14.2.28
+  - Local:        http://localhost:3000
+  - Network:      http://0.0.0.0:3000
+  - Environments: .env
+  - Experiments (use with caution):
+    · outputFileTracingRoot
+
+ ✓ Starting...
+ ✓ Ready in 1797ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.3s (654 modules)
+ GET / 200 in 3000ms
+ ✓ Compiled in 666ms (308 modules)
+ GET / 200 in 89ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 514ms (745 modules)
+ GET /login 200 in 690ms
+ ✓ Compiled /api/auth/[...nextauth] in 295ms (641 modules)
+ GET /api/auth/session 200 in 836ms
+ GET /api/auth/session 200 in 66ms
+ GET / 200 in 115ms
+ GET /login 200 in 88ms
+ ✓ Compiled in 500ms (358 modules)
+ ✓ Compiled in 489ms (358 modules)
+ ✓ Compiled in 535ms (358 modules)
+ GET /login 200 in 111ms
+ GET /api/auth/session 200 in 86ms
+ GET /api/auth/session 200 in 68ms
+ GET /api/auth/session 200 in 74ms
+ GET /api/auth/providers 200 in 94ms
+ GET /api/auth/csrf 200 in 67ms
+ POST /api/auth/callback/credentials 200 in 548ms
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 554ms (219 modules)
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 2.2s (1789 modules)
+ GET /dashboard 200 in 2507ms
+ ✓ Compiled /api/dashboard/stats in 246ms (1065 modules)
+ GET /api/dashboard/stats 200 in 436ms
+ ✓ Compiled /api/crm/dashboard in 238ms (1067 modules)
+ ✓ Compiled (1069 modules)
+ GET /api/auth/session 200 in 548ms
+ GET /api/dashboard/stats 200 in 496ms
+ GET /api/crm/dashboard?period=30 200 in 615ms
+ GET /api/hr/dashboard?period=30 200 in 632ms
+ GET /api/auth/session 200 in 82ms
+ ✓ Compiled /api/multi-tenant/user-tenants in 187ms (1072 modules)
+ GET /api/multi-tenant/user-tenants 200 in 292ms
+ GET /api/crm/dashboard?period=30 200 in 149ms
+ GET /api/hr/dashboard?period=30 200 in 131ms
+ GET /api/multi-tenant/user-tenants 200 in 111ms
+ GET /api/multi-tenant/user-tenants 200 in 81ms
+ GET /api/multi-tenant/user-tenants 200 in 68ms
+ ○ Compiling /event-orchestration ...
+ ✓ Compiled /event-orchestration in 820ms (1860 modules)
+ ○ Compiling /api/events/orchestration ...
+ ✓ Compiled /api/events/orchestration in 689ms (1105 modules)
+ GET /api/events/orchestration?metric=live 200 in 942ms
+Failed to fetch orchestration data: PrismaClientValidationError: 
+Invalid `prisma.eventBus.groupBy()` invocation in
+/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:296:33
+
+  293 // Get detailed metrics
+  294 const [eventMetrics, workflowMetrics, aiMetrics, recentEvents] = await Promise.all([
+  295     // Event processing metrics
+→ 296     prisma.eventBus.groupBy({
+            select: {
+              _count: {
+                select: {
+                  _all: true
+                }
+              },
+              _avg: {
+                select: {
+          ?       retryCount?: true,
+          ?       maxRetries?: true
+                }
+              },
+              status: true
+            },
+            by: [
+              "status"
+            ],
+            where: {
+              tenantId: "cmcknxjh30000oobxa1tmyb45",
+              createdAt: {
+                gte: new Date("2025-07-01T00:00:42.699Z")
+              }
+            }
+          })
+
+The `select` statement for type EventBusAvgAggregateOutputType must not be empty. Available options are marked with ?.
+    at An (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:32:1363)
+    at zn.handleRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:7102)
+    at zn.handleAndLogRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6784)
+    at zn.request (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6491)
+    at async l (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:133:9778)
+    at async Promise.all (index 0)
+    at async GET (/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:294:78)
+    at async /opt/hostedapp/node/root/app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:57228
+    at async eT.execute (/opt/hostedapp/node/root/app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:46851)
+    at async eT.handle (/opt/hostedapp/node/root/app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:58760)
+    at async doRender (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1588:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1496:28)
+    at async DevServer.renderPageComponent (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1924:24)
+    at async DevServer.renderToResponseImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1962:32)
+    at async DevServer.pipeImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/opt/hostedapp/node/root/app/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:818:17)
+    at async /opt/hostedapp/node/root/app/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/opt/hostedapp/node/root/app/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/opt/hostedapp/node/root/app/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/router-server.js:178:21)
+    at async handleRequest (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/router-server.js:355:24)
+    at async requestHandlerImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/router-server.js:379:13)
+    at async Server.requestListener (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  clientVersion: '6.7.0'
+}
+ GET /api/events/orchestration?metric=metrics&timeframe=24h 500 in 334ms
+Failed to register subscription: PrismaClientKnownRequestError: 
+Invalid `this.prisma.eventSubscription.create()` invocation in
+/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:53
+
+  855     }
+  856 });
+  857 if (!existingSubscription) {
+→ 858     await this.prisma.eventSubscription.create(
+Foreign key constraint violated on the constraint: `event_subscriptions_tenantId_fkey`
+    at zn.handleRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:7459)
+    at zn.handleAndLogRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6784)
+    at zn.request (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6491)
+    at async l (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:133:9778)
+    at async EventBusService.registerSubscription (/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:17) {
+  code: 'P2003',
+  meta: {
+    modelName: 'EventSubscription',
+    constraint: 'event_subscriptions_tenantId_fkey'
+  },
+  clientVersion: '6.7.0'
+}
+Failed to register subscription: PrismaClientKnownRequestError: 
+Invalid `this.prisma.eventSubscription.create()` invocation in
+/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:53
+
+  855     }
+  856 });
+  857 if (!existingSubscription) {
+→ 858     await this.prisma.eventSubscription.create(
+Foreign key constraint violated on the constraint: `event_subscriptions_tenantId_fkey`
+    at zn.handleRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:7459)
+    at zn.handleAndLogRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6784)
+    at zn.request (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6491)
+    at async l (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:133:9778)
+    at async EventBusService.registerSubscription (/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:17) {
+  code: 'P2003',
+  meta: {
+    modelName: 'EventSubscription',
+    constraint: 'event_subscriptions_tenantId_fkey'
+  },
+  clientVersion: '6.7.0'
+}
+Failed to register subscription: PrismaClientKnownRequestError: 
+Invalid `this.prisma.eventSubscription.create()` invocation in
+/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:53
+
+  855     }
+  856 });
+  857 if (!existingSubscription) {
+→ 858     await this.prisma.eventSubscription.create(
+Foreign key constraint violated on the constraint: `event_subscriptions_tenantId_fkey`
+    at zn.handleRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:7459)
+    at zn.handleAndLogRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6784)
+    at zn.request (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6491)
+    at async l (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:133:9778)
+    at async EventBusService.registerSubscription (/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:17) {
+  code: 'P2003',
+  meta: {
+    modelName: 'EventSubscription',
+    constraint: 'event_subscriptions_tenantId_fkey'
+  },
+  clientVersion: '6.7.0'
+}
+Failed to register subscription: PrismaClientKnownRequestError: 
+Invalid `this.prisma.eventSubscription.create()` invocation in
+/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:53
+
+  855     }
+  856 });
+  857 if (!existingSubscription) {
+→ 858     await this.prisma.eventSubscription.create(
+Foreign key constraint violated on the constraint: `event_subscriptions_tenantId_fkey`
+    at zn.handleRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:7459)
+    at zn.handleAndLogRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6784)
+    at zn.request (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6491)
+    at async l (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:133:9778)
+    at async EventBusService.registerSubscription (/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:17) {
+  code: 'P2003',
+  meta: {
+    modelName: 'EventSubscription',
+    constraint: 'event_subscriptions_tenantId_fkey'
+  },
+  clientVersion: '6.7.0'
+}
+Failed to register subscription: PrismaClientKnownRequestError: 
+Invalid `this.prisma.eventSubscription.create()` invocation in
+/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:53
+
+  855     }
+  856 });
+  857 if (!existingSubscription) {
+→ 858     await this.prisma.eventSubscription.create(
+Foreign key constraint violated on the constraint: `event_subscriptions_tenantId_fkey`
+    at zn.handleRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:7459)
+    at zn.handleAndLogRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6784)
+    at zn.request (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6491)
+    at async l (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:133:9778)
+    at async EventBusService.registerSubscription (/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:17) {
+  code: 'P2003',
+  meta: {
+    modelName: 'EventSubscription',
+    constraint: 'event_subscriptions_tenantId_fkey'
+  },
+  clientVersion: '6.7.0'
+}
+Failed to register subscription: PrismaClientKnownRequestError: 
+Invalid `this.prisma.eventSubscription.create()` invocation in
+/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:53
+
+  855     }
+  856 });
+  857 if (!existingSubscription) {
+→ 858     await this.prisma.eventSubscription.create(
+Foreign key constraint violated on the constraint: `event_subscriptions_tenantId_fkey`
+    at zn.handleRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:7459)
+    at zn.handleAndLogRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6784)
+    at zn.request (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6491)
+    at async l (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:133:9778)
+    at async EventBusService.registerSubscription (/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:858:17) {
+  code: 'P2003',
+  meta: {
+    modelName: 'EventSubscription',
+    constraint: 'event_subscriptions_tenantId_fkey'
+  },
+  clientVersion: '6.7.0'
+}
+ GET /api/events/orchestration?metric=stats 200 in 1029ms
+Failed to fetch orchestration data: PrismaClientValidationError: 
+Invalid `prisma.eventBus.groupBy()` invocation in
+/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:296:33
+
+  293 // Get detailed metrics
+  294 const [eventMetrics, workflowMetrics, aiMetrics, recentEvents] = await Promise.all([
+  295     // Event processing metrics
+→ 296     prisma.eventBus.groupBy({
+            select: {
+              _count: {
+                select: {
+                  _all: true
+                }
+              },
+              _avg: {
+                select: {
+          ?       retryCount?: true,
+          ?       maxRetries?: true
+                }
+              },
+              status: true
+            },
+            by: [
+              "status"
+            ],
+            where: {
+              tenantId: "cmcknxjh30000oobxa1tmyb45",
+              createdAt: {
+                gte: new Date("2025-07-01T00:00:43.164Z")
+              }
+            }
+          })
+
+The `select` statement for type EventBusAvgAggregateOutputType must not be empty. Available options are marked with ?.
+    at An (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:32:1363)
+    at zn.handleRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:7102)
+    at zn.handleAndLogRequestError (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6784)
+    at zn.request (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:124:6491)
+    at async l (/opt/hostedapp/node/root/app/node_modules/.prisma/client/runtime/library.js:133:9778)
+    at async Promise.all (index 0)
+    at async GET (/home/ubuntu/wegroup-deepagent-platform/app/.next/server/app/api/events/orchestration/route.js:294:78)
+    at async /opt/hostedapp/node/root/app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:57228
+    at async eT.execute (/opt/hostedapp/node/root/app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:46851)
+    at async eT.handle (/opt/hostedapp/node/root/app/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:58760)
+    at async doRender (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1588:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1496:28)
+    at async DevServer.renderPageComponent (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1924:24)
+    at async DevServer.renderToResponseImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:1962:32)
+    at async DevServer.pipeImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/opt/hostedapp/node/root/app/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/base-server.js:818:17)
+    at async /opt/hostedapp/node/root/app/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/opt/hostedapp/node/root/app/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/opt/hostedapp/node/root/app/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/router-server.js:178:21)
+    at async handleRequest (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/router-server.js:355:24)
+    at async requestHandlerImpl (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/router-server.js:379:13)
+    at async Server.requestListener (/opt/hostedapp/node/root/app/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  clientVersion: '6.7.0'
+}
+ GET /api/events/orchestration?metric=metrics&timeframe=24h 500 in 154ms
+ GET /api/events/orchestration?metric=live 200 in 155ms
+ GET /api/events/orchestration?metric=stats 200 in 128ms
+ GET /api/dashboard/stats 200 in 156ms
+ GET /api/multi-tenant/user-tenants 200 in 166ms
+ GET /api/crm/dashboard?period=30 200 in 181ms
+ GET /api/crm/dashboard?period=30 200 in 77ms
+ GET /api/hr/dashboard?period=30 200 in 88ms
+ GET /api/hr/dashboard?period=30 200 in 111ms
+ GET /api/multi-tenant/user-tenants 200 in 166ms
+ GET /api/dashboard/stats 200 in 132ms
+ GET /api/multi-tenant/user-tenants 200 in 74ms
+ GET /api/multi-tenant/user-tenants 200 in 73ms
+ ○ Compiling /ai-chat ...
+ ✓ Compiled /ai-chat in 908ms (1910 modules)
+ GET /api/multi-tenant/user-tenants 200 in 187ms
+ GET /api/dashboard/stats 200 in 188ms
+ GET /api/hr/dashboard?period=30 200 in 202ms
+ GET /api/crm/dashboard?period=30 200 in 208ms
+ GET /api/multi-tenant/user-tenants 200 in 127ms
+ GET /api/dashboard/stats 200 in 175ms
+ GET /api/crm/dashboard?period=30 200 in 164ms
+ GET /api/hr/dashboard?period=30 200 in 157ms
+ GET /api/multi-tenant/user-tenants 200 in 66ms
+ GET /api/multi-tenant/user-tenants 200 in 65ms
+ ✓ Compiled /admin/system in 481ms (1912 modules)
+ ✓ Compiled /api/admin/system/stats in 239ms (1016 modules)
+ ✓ Compiled (1019 modules)
+ GET /api/admin/system/logs?limit=50 200 in 617ms
+ GET /api/admin/system/stats 200 in 619ms
+ GET /api/admin/system/stats 200 in 87ms
+ GET /api/admin/system/logs?limit=50 200 in 83ms
+[?25h
