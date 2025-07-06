@@ -1,203 +1,68 @@
-# weGROUP DeepAgent Platform - Architektur-Dokumentation
+# WeGroup Platform - Architektur
 
 ## Überblick
 
-Die weGROUP DeepAgent Platform ist eine Multi-Tenant AI-Orchestration Plattform, die auf einer modernen, skalierbaren Architektur basiert.
+Die WeGroup Platform ist eine intelligente Multi-Mandanten-Plattform für moderne Unternehmen, die eine skalierbare und sichere Architektur für verschiedene Organisationsstrukturen bietet.
 
-## Multi-Tenant-Architektur
+## Multi-Mandanten-Architektur
 
-### Mandanten-Struktur
+### Konzept
+Die Plattform unterstützt eine vollständige Multi-Mandanten-Architektur, die es ermöglicht:
+- Mehrere Unternehmen/Organisationen auf einer einzigen Plattform-Instanz zu betreiben
+- Vollständige Datenisolation zwischen den Mandanten
+- Mandanten-spezifische Konfigurationen und Anpassungen
+- Zentrale Administration mit granularen Zugriffsrechten
 
-Die Plattform unterstützt 8 vorkonfigurierte Mandanten:
+### Mandanten-Verwaltung
+- **Mandanten-Isolation**: Jeder Mandant hat seine eigenen Daten und Konfigurationen
+- **Übergreifender Zugriff**: Super Administratoren können auf alle Mandanten zugreifen
+- **Mandanten-spezifische Rollen**: Rollen können mandanten-spezifisch oder übergreifend definiert werden
+- **Skalierbarkeit**: Neue Mandanten können dynamisch hinzugefügt werden
 
-1. **weGROUP** (Master-Mandant)
-   - Zentrale Verwaltung
-   - Super-Admin-Funktionen
-   - Mandantenübergreifende Berichte
+## System-Komponenten
 
-2. **weANALYTICS**
-   - Datenanalyse und Business Intelligence
-   - Advanced Analytics Dashboard
-   - Predictive Analytics
+### Frontend
+- **Technologie**: Moderne Web-Technologien (React/Vue.js)
+- **Responsive Design**: Optimiert für Desktop und Mobile
+- **Multi-Language Support**: Unterstützung für verschiedene Sprachen
+- **Theme-System**: Anpassbare UI-Themes pro Mandant
 
-3. **weFINANCE**
-   - Finanzmanagement
-   - Budgetierung und Forecasting
-   - Expense Tracking
+### Backend
+- **API-First Architektur**: RESTful APIs für alle Funktionen
+- **Microservices**: Modulare Service-Architektur
+- **Datenbank**: Multi-Tenant-fähige Datenbankstruktur
+- **Caching**: Redis-basiertes Caching für Performance
 
-4. **wePROJECT**
-   - Projektmanagement
-   - Resource Planning
-   - Team Collaboration
+### Sicherheit
+- **Authentifizierung**: JWT-basierte Authentifizierung
+- **Autorisierung**: Rollenbasierte Zugriffskontrolle (RBAC)
+- **Datenverschlüsselung**: End-to-End Verschlüsselung sensibler Daten
+- **Audit-Logging**: Vollständige Nachverfolgung aller Aktionen
 
-5. **weHR**
-   - Human Resources Management
-   - Employee Analytics
-   - Performance Tracking
+## Deployment-Architektur
 
-6. **weSALES**
-   - Sales Management
-   - CRM Integration
-   - Sales Analytics
+### Container-basiert
+- **Docker**: Containerisierte Services
+- **Kubernetes**: Orchestrierung und Skalierung
+- **Load Balancing**: Automatische Lastverteilung
+- **Auto-Scaling**: Dynamische Ressourcen-Anpassung
 
-7. **weMARKETING**
-   - Marketing Campaigns
-   - Lead Management
-   - Marketing Analytics
+### Cloud-Native
+- **Cloud-Provider Agnostic**: Unterstützung für AWS, Azure, GCP
+- **Infrastructure as Code**: Terraform-basierte Infrastruktur
+- **CI/CD Pipeline**: Automatisierte Deployment-Prozesse
+- **Monitoring**: Umfassendes Application Performance Monitoring
 
-8. **weOPERATIONS**
-   - Operational Excellence
-   - Process Optimization
-   - Supply Chain Management
+## Performance & Skalierung
 
-### Datenbank-Schema
+### Horizontal Skalierung
+- **Service-Skalierung**: Individuelle Skalierung von Microservices
+- **Database Sharding**: Verteilung der Datenbank-Last
+- **CDN Integration**: Globale Content-Delivery
+- **Caching-Strategien**: Multi-Level Caching
 
-```sql
--- Multi-Tenant-Schema
-CREATE TABLE tenants (
-  id UUID PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  slug VARCHAR(100) UNIQUE NOT NULL,
-  settings JSONB,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
--- Benutzer mit Mandanten-Zuordnung
-CREATE TABLE users (
-  id UUID PRIMARY KEY,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  tenant_id UUID REFERENCES tenants(id),
-  role user_role NOT NULL,
-  permissions JSONB,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
--- Rollen-Hierarchie
-CREATE TYPE user_role AS ENUM (
-  'SUPER_ADMIN',
-  'TENANT_ADMIN', 
-  'MANAGER',
-  'TEAM_LEAD',
-  'USER',
-  'VIEWER'
-);
-```
-
-## Benutzerrollen-System
-
-### Hierarchie (6 Stufen)
-
-1. **SUPER_ADMIN**
-   - Vollzugriff auf alle Mandanten
-   - System-Administration
-   - Mandanten-Management
-
-2. **TENANT_ADMIN**
-   - Vollzugriff auf eigenen Mandanten
-   - Benutzerverwaltung
-   - Mandanten-Konfiguration
-
-3. **MANAGER**
-   - Erweiterte Berechtigungen
-   - Team-Management
-   - Reporting-Zugriff
-
-4. **TEAM_LEAD**
-   - Team-spezifische Verwaltung
-   - Projekt-Koordination
-   - Basis-Reporting
-
-5. **USER**
-   - Standard-Benutzerrechte
-   - Eigene Daten verwalten
-   - Basis-Funktionen
-
-6. **VIEWER**
-   - Nur-Lese-Zugriff
-   - Dashboard-Ansicht
-   - Keine Bearbeitungsrechte
-
-## AI-Architektur
-
-### Multi-Agent-System
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│  NLP Agent      │    │ Decision Agent  │    │ Learning Agent  │
-│                 │    │                 │    │                 │
-│ - Text Analysis │    │ - Auto Decisions│    │ - Pattern Learn │
-│ - Sentiment     │    │ - Rule Engine   │    │ - Model Update  │
-│ - Entity Recog  │    │ - Workflow      │    │ - Optimization  │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 │
-                    ┌─────────────────┐
-                    │ Orchestrator    │
-                    │                 │
-                    │ - Agent Coord   │
-                    │ - Task Routing  │
-                    │ - Result Merge  │
-                    └─────────────────┘
-```
-
-### AI-Services
-
-1. **Advanced NLP Service**
-   - Textverarbeitung
-   - Sentiment-Analyse
-   - Entity Recognition
-   - Sprachübersetzung
-
-2. **Multi-Agent AI Service**
-   - Agent-Koordination
-   - Task-Distribution
-   - Result-Aggregation
-
-3. **Autonomous Decision Service**
-   - Regelbasierte Entscheidungen
-   - ML-basierte Vorhersagen
-   - Workflow-Automatisierung
-
-4. **TensorFlow Client Service**
-   - Model-Serving
-   - Batch-Prediction
-   - Real-time Inference
-
-5. **Voice Command Service**
-   - Speech-to-Text
-   - Intent Recognition
-   - Voice-UI Integration
-
-6. **Self-Learning Service**
-   - Continuous Learning
-   - Model-Updates
-   - Performance-Monitoring
-
-## Sicherheitsarchitektur
-
-### Zero-Trust-Prinzipien
-
-1. **Identitätsverifikation**
-   - Multi-Faktor-Authentifizierung
-   - Biometrische Authentifizierung
-   - Continuous Authentication
-
-2. **Least-Privilege-Access**
-   - Rollenbasierte Berechtigungen
-   - Just-in-Time-Access
-   - Regular Access Reviews
-
-3. **Verschlüsselung**
-   - End-to-End-Verschlüsselung
-   - Data-at-Rest-Verschlüsselung
-   - Transport-Layer-Security
-
-4. **Monitoring & Auditing**
-   - Real-time Security Monitoring
-   - Audit Logs
-   - Compliance Reporting
-
----
-
-Diese Architektur gewährleistet Skalierbarkeit, Sicherheit und Performance für Enterprise-Anforderungen.
+### Monitoring & Observability
+- **Metriken**: Prometheus-basierte Metriken-Sammlung
+- **Logging**: Zentralisierte Log-Aggregation
+- **Tracing**: Distributed Tracing für Request-Verfolgung
+- **Alerting**: Proaktive Benachrichtigungen bei Problemen
